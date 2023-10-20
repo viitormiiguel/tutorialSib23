@@ -28,7 +28,7 @@ def createTxt(imagesp):
 
         pimg = imagesp + p
         
-        if '.png' in pimg:
+        if '.png' in pimg or '.jpg' in pimg:
         
             img = cv2.imread(pimg)
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

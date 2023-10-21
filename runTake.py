@@ -37,10 +37,8 @@ def camera():
 
 if __name__ == '__main__':
     
-    # camera()
+    camera()
     
     createTxt('output/rec/')
-    
-    # convertImg()
-    
+        
     

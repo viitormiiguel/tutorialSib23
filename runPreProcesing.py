@@ -70,7 +70,7 @@ def convertImg():
             m = Mesh.from_file("output/deep3d/" + l, color=(0.8, 0.8, 0.8, 1.0))
             m.to_unit_cube()
             
-            nome = l.split('.')            
+            nome = l.split('.')
             # print(nome)
             render(
                 [m],
@@ -86,3 +86,5 @@ def convertImg():
 if __name__ == '__main__':
     
     path = 'output/rec/'
+    
+    convertImg()

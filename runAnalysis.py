@@ -14,6 +14,8 @@ from feat.utils.io import get_test_data_path
 from feat.plotting import imshow
 
 from runPlot import cropImage
+import seaborn as sns
+
 
 # Raiva 4, 5, 7, 10, 17, 22, 23, 24, 25, 26
 # Medo 1, 2, 4, 5, 20, 25, 26
@@ -47,7 +49,7 @@ def dataOpen(image):
         
     return valores
 
-def pyfeat(image):
+def pyfeat(image, tipo):
     
     detector = Detector(
         face_model="retinaface",
@@ -57,7 +59,7 @@ def pyfeat(image):
         facepose_model="img2pose",
     )
     
-    path_img = path + '\\output\\rec\\'
+    path_img = path + '\\output\\'+tipo+'\\'
 
     single_face_img_path = os.path.join(path_img, image)
 
@@ -70,129 +72,155 @@ def pyfeat(image):
     
     return emotions, aus
 
-def getInfos():
-
-    detector = Detector(
-        face_model="retinaface",
-        landmark_model="mobilefacenet",
-        au_model='xgb',
-        emotion_model="resmasknet",
-        facepose_model="img2pose",
-    )
+def getInfoOpen(o1, o2):
     
     ret1 = []
     ret2 = []
-
-    lista = os.listdir('output/rec/')
-    for l in lista:
+    
+    laus = list(o1.values)
+    laus = list(laus[0])                
+    lblAus = list(o1)
         
-        if 'photo0' in l:
-            
-            if '.jpg' in l or '.png' in l:
-                                        
-                path_img = path + '\\output\\rec\\'
-
-                single_face_img_path = os.path.join(path_img, l)
-
-                ## PY-FEAT
-                single_face_prediction = detector.detect_image(single_face_img_path)
-
-                emotions = single_face_prediction.emotions
-                
-                aus = single_face_prediction.aus
-
-                # print(emotions, type(emotions))
-                # print(aus)                
-                
-                # List emotions
-                lemo = list(emotions.values)
-                lemo = list(lemo[0])
-                                
-                # List aus
-                laus = list(aus.values)
-                laus = list(laus[0])                
-                lblAus = list(aus)
-
-                maximo = max(lemo)
-                getEmo = lemo.index(maximo)
-                
-                # print(ausEmo[getEmo])                
-                ret1.append(ausEmo[getEmo])
-                
-                temp = []                
-                for i in ausEmo[getEmo]:
-                    
-                    name = ''
-                    if len(str(i)) == 1:
-                        name = 'AU0' + str(i)
-                    else:
-                        name = 'AU' + str(i)
-                    
-                    indice = lblAus.index(name)
-                    getVal = laus[indice]
-                    
-                    temp.append(getVal)
-                    
-                # print(temp)
-                ret2.append(temp)
-
-                
-    lista = os.listdir('output/deep3d/')
-    for l in lista:
+    getEmo = 5
+    
+    # print(ausEmo[getEmo])                
+    ret1.append(ausEmo[getEmo])
+    
+    temp = []                
+    for i in ausEmo[getEmo]:
         
-        if 'photo0' in l:
-            
-            if '.jpg' in l or '.png' in l:
-                                        
-                path_img = path + '\\output\\deep3d\\'
-
-                single_face_img_path = os.path.join(path_img, l)
-
-                ## PY-FEAT
-                single_face_prediction = detector.detect_image(single_face_img_path)
-
-                emotions = single_face_prediction.emotions
-                
-                aus = single_face_prediction.aus
-
-                # print(emotions)
-                # print(aus)
-                
-                # List emotions
-                lemo = list(emotions.values)
-                lemo = list(lemo[0])
-                                
-                # List aus
-                laus = list(aus.values)
-                laus = list(laus[0])                
-                lblAus = list(aus)
-
-                maximo = max(lemo)
-                getEmo = lemo.index(maximo)
-                
-                # print(ausEmo[getEmo])                
-                ret1.append(ausEmo[getEmo])
-                
-                temp = []                
-                for i in ausEmo[getEmo]:
-                    
-                    name = ''
-                    if len(str(i)) == 1:
-                        name = 'AU0' + str(i)
-                    else:
-                        name = 'AU' + str(i)
-                    
-                    indice = lblAus.index(name)
-                    getVal = laus[indice]
-                    
-                    temp.append(getVal)
-                    
-                # print(temp)
-                ret2.append(temp)
+        name = ''
+        if len(str(i)) == 1:
+            name = ' AU0' + str(i) + '_r'
+        else:
+            name = ' AU' + str(i) + '_r'
+        
+        indice = lblAus.index(name)
+        getVal = laus[indice]
+        
+        temp.append(getVal)
+        
+    ret2.append(temp)
+    
+    ## ============================================
+    
+    laus = list(o2.values)
+    laus = list(laus[0])                
+    lblAus = list(o2)
+        
+    getEmo = 5
+    
+    # print(ausEmo[getEmo])                
+    ret1.append(ausEmo[getEmo])
+    
+    temp = []                
+    for i in ausEmo[getEmo]:
+        
+        name = ''
+        if len(str(i)) == 1:
+            name = ' AU0' + str(i) + '_r'
+        else:
+            name = ' AU' + str(i) + '_r'
+        
+        indice = lblAus.index(name)
+        getVal = laus[indice]
+        
+        temp.append(getVal)
+        
+    ret2.append(temp)
     
     return ret1, ret2
 
-def runPlots(retorno):
+def getInfos(p1, p2):
+   
+    ret1 = []
+    ret2 = []
+
+    emotions = p1[0]
+    
+    aus = p1[1]
+
+    # print(emotions, type(emotions))
+    # print(aus)                
+    
+    # List emotions
+    lemo = list(emotions.values)
+    lemo = list(lemo[0])
+                    
+    # List aus
+    laus = list(aus.values)
+    laus = list(laus[0])                
+    lblAus = list(aus)
+
+    maximo = max(lemo)
+    getEmo = lemo.index(maximo)
+    
+    # print(ausEmo[getEmo])                
+    ret1.append(ausEmo[getEmo])
+    
+    temp = []                
+    for i in ausEmo[getEmo]:
+        
+        name = ''
+        if len(str(i)) == 1:
+            name = 'AU0' + str(i)
+        else:
+            name = 'AU' + str(i)
+        
+        indice = lblAus.index(name)
+        getVal = laus[indice]
+        
+        temp.append(getVal)
+        
+    # print(temp)
+    ret2.append(temp)
+
+    ## =========================================================
+
+    emotions = p2[0]
+    
+    aus = p2[1]
+
+    # print(emotions)
+    # print(aus)
+    
+    # List emotions
+    lemo = list(emotions.values)
+    lemo = list(lemo[0])
+                    
+    # List aus
+    laus = list(aus.values)
+    laus = list(laus[0])                
+    lblAus = list(aus)
+
+    maximo = max(lemo)
+    getEmo = lemo.index(maximo)
+    
+    # print(ausEmo[getEmo])                
+    ret1.append(ausEmo[getEmo])
+    
+    temp = []                
+    for i in ausEmo[getEmo]:
+        
+        name = ''
+        if len(str(i)) == 1:
+            name = 'AU0' + str(i)
+        else:
+            name = 'AU' + str(i)
+        
+        indice = lblAus.index(name)
+        getVal = laus[indice]
+        
+        temp.append(getVal)
+        
+    # print(temp)
+    ret2.append(temp)
+    
+    return ret1, ret2
+
+def runPlots(retorno, retorno2):
+    
+    sns.set_theme()
     
     pimg = 'output/deep3d/'
     
@@ -202,34 +230,56 @@ def runPlots(retorno):
     
     ## Crop Real Face    
     r = cropImage('photo0.png')
+    
+    plt.figure(figsize=(10,8))
         
     ## =========================================================            
-    plt.subplot(2, 2, 1)
+    plt.subplot(3, 2, 1)
     plt.title('Real Face')
     plt.imshow(r)
     plt.axis('off')
 
     ## =========================================================
-    plt.subplot(2, 2, 2)
+    plt.subplot(3, 2, 2)
     plt.title('Deep3D Face')
     plt.imshow(img)
     plt.axis('off')
     
     ## =========================================================    
-    label1 = [str(x) for x in retorno[0][0]]
+    label1 = [str("AU") + str(x) for x in retorno[0][0]]
     valor1 = retorno[1][0]
 
-    plt.subplot(2, 2, 3)
+    plt.subplot(3, 2, 3)
+    plt.title('Intensities PyFeat')
     plt.ylim([0,1])
     plt.bar(label1, valor1)
 
     ## =========================================================    
-    label2 = [str(x) for x in retorno[0][1]]
+    label2 = [str("AU") + str(x) for x in retorno[0][1]]
     valor2 = retorno[1][1]
     
-    plt.subplot(2, 2, 4)
+    plt.subplot(3, 2, 4)
+    plt.title('Intensities PyFeat')
     plt.ylim([0,1])
     plt.bar(label2, valor2)
+    
+    ## =========================================================    
+    labelOpen1 = [str("AU") + str(x) for x in retorno2[0][0]]
+    valorOpen1 = retorno2[1][0]
+
+    plt.subplot(3, 2, 5)
+    plt.title('Intensities OpenFace')
+    plt.ylim([0,5])
+    plt.bar(labelOpen1, valorOpen1)
+
+    ## =========================================================    
+    labelOpen2 = [str("AU") + str(x) for x in retorno2[0][1]]
+    valorOpen2 = retorno2[1][1]
+    
+    plt.subplot(3, 2, 6)
+    plt.title('Intensities OpenFace')
+    plt.ylim([0,5])
+    plt.bar(labelOpen2, valorOpen2)
 
     plt.show()
     
@@ -252,16 +302,16 @@ if __name__ == '__main__':
     # openFace('photo0.png', 'deep3d')
     # openFace('photo0_mesh.png', 'deep3d')
     
-    ## Run Get data OpenFace
-    # dataOpen('photo0')
-    # dataOpen('photo0_mesh')
-    
     ## Run Get data py-feat
-    # pyfeat('photo0.png') 
-    # pyfeat('photo0_mesh.png')    
+    p1 = pyfeat('photo0.png', 'rec') 
+    p2 = pyfeat('photo0_mesh.png', 'deep3d')    
+        
+    r = getInfos(p1, p2)
     
-    exit()
+    ## Run Get data OpenFace
+    o1 = dataOpen('photo0')
+    o2 = dataOpen('photo0_mesh')
     
-    r = getInfos()
+    s = getInfoOpen(o1, o2)
     
-    runPlots(r)
+    runPlots(r, s)

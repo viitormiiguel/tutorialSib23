@@ -298,19 +298,22 @@ if __name__ == '__main__':
         [1, 2, 5, 26],
     ]
     
+    f1 = 'photo0.png'
+    f2 = 'photo0_mesh.png'
+    
     ## Run Openface
-    # openFace('photo0.png', 'deep3d')
-    # openFace('photo0_mesh.png', 'deep3d')
+    # openFace(f1, 'deep3d')
+    # openFace(f2, 'deep3d')
     
     ## Run Get data py-feat
-    p1 = pyfeat('photo0.png', 'rec') 
-    p2 = pyfeat('photo0_mesh.png', 'deep3d')    
+    p1 = pyfeat(f1, 'rec') 
+    p2 = pyfeat(f2, 'deep3d')    
         
     r = getInfos(p1, p2)
     
     ## Run Get data OpenFace
-    o1 = dataOpen('photo0')
-    o2 = dataOpen('photo0_mesh')
+    o1 = dataOpen(f1.split('.')[0])
+    o2 = dataOpen(f2.split('.')[0])
     
     s = getInfoOpen(o1, o2)
     

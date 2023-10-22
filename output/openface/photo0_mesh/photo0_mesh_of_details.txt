@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\output\deep3d\photo0_mesh.png
+Input full path:E:\PythonProjects\tutorialSib23\output\deep3d\photo0_mesh.png
+Camera parameters:233.333,233.333,128,128
+Output HOG:photo0_mesh.hog
+Output image:photo0_mesh.jpg
+Output aligned directory:photo0_mesh_aligned
+Output csv:photo0_mesh.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

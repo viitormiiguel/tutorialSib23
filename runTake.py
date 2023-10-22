@@ -38,7 +38,5 @@ def camera():
 if __name__ == '__main__':
     
     camera()
-    
-    createTxt('output/rec/')
         
     

@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\output\rec\photo0.png
+Input full path:E:\PythonProjects\tutorialSib23\output\rec\photo0.png
+Camera parameters:500,500,320,240
+Output HOG:photo0.hog
+Output image:photo0.jpg
+Output aligned directory:photo0_aligned
+Output csv:photo0.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

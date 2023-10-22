@@ -1,6 +1,7 @@
 
 import cv2
 import os 
+import time
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,6 +21,54 @@ from runPlot import cropImage
 # Felicidade 6, 12
 # Tristeza 1, 4, 11, 15, 17
 # Surpresa 1, 2, 5, 26
+
+def openFace(image, tipo):
+    
+    path_img = path + '\\output\\'+tipo+'\\'
+            
+    exec1 = path + '\\output\\'+tipo+'\\' + image
+    exec2 = path + '\\output\\openface\\' + image.split('.')[0]
+
+    comando = ' -f ' + '"' +  exec1 + '"'
+
+    os.system('"C:\\OpenFace\\FaceLandmarkImg.exe' + comando + ' -out_dir ' + exec2 + '"')
+    
+    time.sleep(1)
+
+def dataOpen(image):
+            
+    nome = image.split('.')
+
+    arq = path + '\\output\\openface\\' + image + '\\' + image + '.csv'
+                    
+    arquivo = pd.read_csv(arq)
+            
+    valores = arquivo.iloc[:, 676:693]
+        
+    return valores
+
+def pyfeat(image):
+    
+    detector = Detector(
+        face_model="retinaface",
+        landmark_model="mobilefacenet",
+        au_model='xgb',
+        emotion_model="resmasknet",
+        facepose_model="img2pose",
+    )
+    
+    path_img = path + '\\output\\rec\\'
+
+    single_face_img_path = os.path.join(path_img, image)
+
+    ## PY-FEAT
+    single_face_prediction = detector.detect_image(single_face_img_path)
+
+    emotions = single_face_prediction.emotions
+    
+    aus = single_face_prediction.aus
+    
+    return emotions, aus
 
 def getInfos():
 
@@ -45,6 +94,7 @@ def getInfos():
 
                 single_face_img_path = os.path.join(path_img, l)
 
+                ## PY-FEAT
                 single_face_prediction = detector.detect_image(single_face_img_path)
 
                 emotions = single_face_prediction.emotions
@@ -98,6 +148,7 @@ def getInfos():
 
                 single_face_img_path = os.path.join(path_img, l)
 
+                ## PY-FEAT
                 single_face_prediction = detector.detect_image(single_face_img_path)
 
                 emotions = single_face_prediction.emotions
@@ -185,7 +236,7 @@ def runPlots(retorno):
 if __name__ == '__main__': 
     
     path = 'E:\\PythonProjects\\tutorialSib23'
-        
+            
     labelEmo = ['anger','disgust', 'fear','happiness','sadness','surprise']
     
     ausEmo = [
@@ -195,7 +246,21 @@ if __name__ == '__main__':
         [6, 12],
         [1, 4, 11, 15, 17],
         [1, 2, 5, 26],
-    ]    
+    ]
+    
+    ## Run Openface
+    # openFace('photo0.png', 'deep3d')
+    # openFace('photo0_mesh.png', 'deep3d')
+    
+    ## Run Get data OpenFace
+    # dataOpen('photo0')
+    # dataOpen('photo0_mesh')
+    
+    ## Run Get data py-feat
+    # pyfeat('photo0.png') 
+    # pyfeat('photo0_mesh.png')    
+    
+    exit()
     
     r = getInfos()
     

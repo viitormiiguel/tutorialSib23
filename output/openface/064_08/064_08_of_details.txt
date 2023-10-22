@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\output\rec\064_08.jpg
+Input full path:E:\PythonProjects\tutorialSib23\output\rec\064_08.jpg
+Camera parameters:1230.47,1230.47,675,675
+Output HOG:064_08.hog
+Output image:064_08.jpg
+Output aligned directory:064_08_aligned
+Output csv:064_08.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

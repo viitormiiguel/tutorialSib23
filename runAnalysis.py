@@ -30,11 +30,14 @@ def getInfos():
         emotion_model="resmasknet",
         facepose_model="img2pose",
     )
+    
+    ret1 = []
+    ret2 = []
 
     lista = os.listdir('output/rec/')
     for l in lista:
         
-        if 'photo' in l:
+        if 'photo0' in l:
             
             if '.jpg' in l or '.png' in l:
                                         
@@ -48,13 +51,46 @@ def getInfos():
                 
                 aus = single_face_prediction.aus
 
-                print(emotions)
-                print(aus)
+                # print(emotions, type(emotions))
+                # print(aus)                
+                
+                # List emotions
+                lemo = list(emotions.values)
+                lemo = list(lemo[0])
+                                
+                # List aus
+                laus = list(aus.values)
+                laus = list(laus[0])                
+                lblAus = list(aus)
+
+                maximo = max(lemo)
+                getEmo = lemo.index(maximo)
+                
+                # print(ausEmo[getEmo])                
+                ret1.append(ausEmo[getEmo])
+                
+                temp = []                
+                for i in ausEmo[getEmo]:
+                    
+                    name = ''
+                    if len(str(i)) == 1:
+                        name = 'AU0' + str(i)
+                    else:
+                        name = 'AU' + str(i)
+                    
+                    indice = lblAus.index(name)
+                    getVal = laus[indice]
+                    
+                    temp.append(getVal)
+                    
+                # print(temp)
+                ret2.append(temp)
+
                 
     lista = os.listdir('output/deep3d/')
     for l in lista:
         
-        if 'photo' in l:
+        if 'photo0' in l:
             
             if '.jpg' in l or '.png' in l:
                                         
@@ -68,36 +104,81 @@ def getInfos():
                 
                 aus = single_face_prediction.aus
 
-                print(emotions)
-                print(aus)
+                # print(emotions)
+                # print(aus)
+                
+                # List emotions
+                lemo = list(emotions.values)
+                lemo = list(lemo[0])
+                                
+                # List aus
+                laus = list(aus.values)
+                laus = list(laus[0])                
+                lblAus = list(aus)
 
-def runPlots():
+                maximo = max(lemo)
+                getEmo = lemo.index(maximo)
+                
+                # print(ausEmo[getEmo])                
+                ret1.append(ausEmo[getEmo])
+                
+                temp = []                
+                for i in ausEmo[getEmo]:
+                    
+                    name = ''
+                    if len(str(i)) == 1:
+                        name = 'AU0' + str(i)
+                    else:
+                        name = 'AU' + str(i)
+                    
+                    indice = lblAus.index(name)
+                    getVal = laus[indice]
+                    
+                    temp.append(getVal)
+                    
+                # print(temp)
+                ret2.append(temp)
+    
+    return ret1, ret2
+
+def runPlots(retorno):
     
     pimg = 'output/deep3d/'
     
+    ## Deep3D Image
     img = cv2.imread(pimg + "photo0_mesh.png")
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     
+    ## Crop Real Face    
     r = cropImage('photo0.png')
-  
-    # img2 = cv2.imread(r)
-    # img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-    
-    plt.axis('off')
-
+        
+    ## =========================================================            
     plt.subplot(2, 2, 1)
-    plt.imshow(img)
-    plt.axis('off')
-
-    plt.subplot(2, 2, 2)
+    plt.title('Real Face')
     plt.imshow(r)
     plt.axis('off')
 
-    plt.subplot(2, 2, 3)
+    ## =========================================================
+    plt.subplot(2, 2, 2)
+    plt.title('Deep3D Face')
     plt.imshow(img)
+    plt.axis('off')
+    
+    ## =========================================================    
+    label1 = [str(x) for x in retorno[0][0]]
+    valor1 = retorno[1][0]
 
+    plt.subplot(2, 2, 3)
+    plt.ylim([0,1])
+    plt.bar(label1, valor1)
+
+    ## =========================================================    
+    label2 = [str(x) for x in retorno[0][1]]
+    valor2 = retorno[1][1]
+    
     plt.subplot(2, 2, 4)
-    plt.imshow(img)
+    plt.ylim([0,1])
+    plt.bar(label2, valor2)
 
     plt.show()
     
@@ -105,17 +186,17 @@ if __name__ == '__main__':
     
     path = 'E:\\PythonProjects\\tutorialSib23'
         
-    labelEmo = ['Raiva','Medo','Nojo','Felicidade','Tristeza','Surpresa']
+    labelEmo = ['anger','disgust', 'fear','happiness','sadness','surprise']
     
     ausEmo = [
         [4, 5, 7, 10, 17, 22, 23, 24, 25, 26],
-        [1, 2, 4, 5, 20, 25, 26],
         [9, 10, 16, 17, 25, 26],
+        [1, 2, 4, 5, 20, 25, 26],
         [6, 12],
         [1, 4, 11, 15, 17],
         [1, 2, 5, 26],
     ]    
     
-    # getInfos()
+    r = getInfos()
     
-    runPlots()
+    runPlots(r)

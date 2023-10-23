@@ -219,6 +219,7 @@ def getInfos(p1, emo):
 def runPlots(r1, r2, r3, retorno2):
         
     sns.set_theme()
+    sns.set_style("dark")
     
     pimg = 'output/deep3d/'
     
@@ -261,7 +262,7 @@ def runPlots(r1, r2, r3, retorno2):
     plt.subplot(3, 3, 4)
     plt.title('Intensities PyFeat')
     plt.ylim([0,5])
-    plt.bar(label1, valor1)
+    plt.bar(label1, valor1, width=.6)
 
     label2 = [str("AU") + str(x) for x in r2[0][0]]
     valor2 = r2[1][0]
@@ -269,7 +270,7 @@ def runPlots(r1, r2, r3, retorno2):
     plt.subplot(3, 3, 5)
     plt.title('Intensities PyFeat')
     plt.ylim([0,5])
-    plt.bar(label2, valor2)
+    plt.bar(label2, valor2, width=.6)
     
     label3 = [str("AU") + str(x) for x in r3[0][0]]
     valor3 = r3[1][0]
@@ -277,7 +278,7 @@ def runPlots(r1, r2, r3, retorno2):
     plt.subplot(3, 3, 6)
     plt.title('Intensities PyFeat')
     plt.ylim([0,5])
-    plt.bar(label3, valor3)
+    plt.bar(label3, valor3, width=.6)
     
     ## =========================================================    
     labelOpen1 = [str("AU") + str(x) for x in retorno2[0][0]]
@@ -286,7 +287,7 @@ def runPlots(r1, r2, r3, retorno2):
     plt.subplot(3, 3, 7)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
-    plt.bar(labelOpen1, valorOpen1)
+    plt.bar(labelOpen1, valorOpen1, width=.6)
 
     ## =========================================================    
     labelOpen2 = [str("AU") + str(x) for x in retorno2[0][1]]
@@ -295,7 +296,7 @@ def runPlots(r1, r2, r3, retorno2):
     plt.subplot(3, 3, 8)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
-    plt.bar(labelOpen2, valorOpen2)
+    plt.bar(labelOpen2, valorOpen2, width=.6)
     
     ## =========================================================    
     labelOpen3 = [str("AU") + str(x) for x in retorno2[0][2]]
@@ -304,7 +305,7 @@ def runPlots(r1, r2, r3, retorno2):
     plt.subplot(3, 3, 9)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
-    plt.bar(labelOpen3, valorOpen3)
+    plt.bar(labelOpen3, valorOpen3, width=.6)
     
     plt.subplots_adjust(left=0.1,
                     bottom=0.1, 
@@ -331,9 +332,9 @@ if __name__ == '__main__':
         [1, 2, 5, 26],
     ]
     
-    f1 = 'photo0.png'
-    f2 = 'photo0_mesh.png'
-    f3 = 'orig_photo0_rendered_images.jpg'
+    f1 = '064_08.jpg'
+    f2 = '064_08_mesh.png'
+    f3 = 'orig_064_08_rendered_images.jpg'
     
     ## Run Openface
     # openFace(f1, 'deep3d')

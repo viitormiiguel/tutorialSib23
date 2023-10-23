@@ -1,8 +1,8 @@
 #/bin/bash
 
-# cd ../Deep3DFaceReconstruction/
+cd ../Deep3DFaceReconstruction/
 
-# source demo.sh
+source demo.sh
 
 cd G:/PythonProjects/DECA/
 

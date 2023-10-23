@@ -118,8 +118,8 @@ if __name__ == '__main__':
     
     path = 'output/rec/'
         
-    # createTxt('output/rec/')
+    createTxt('output/rec/')
     
     # convertImg()
     
-    convertImgDeca()
+    # convertImgDeca()

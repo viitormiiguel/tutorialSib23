@@ -1,0 +1,3 @@
+newmtl FaceTexture
+map_Kd fear2.png
+disp E:/PythonProjects/tutorialSib23/out/deca\fear2\fear2_normals.png

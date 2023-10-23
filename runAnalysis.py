@@ -15,7 +15,7 @@ from feat.plotting import imshow
 
 from runCropFace import cropImage
 import seaborn as sns
-
+from sklearn import preprocessing as pre
 
 # Raiva 4, 5, 7, 10, 17, 22, 23, 24, 25, 26
 # Medo 1, 2, 4, 5, 20, 25, 26
@@ -70,9 +70,16 @@ def pyfeat(image, tipo):
     
     aus = single_face_prediction.aus
     
-    return emotions, aus
+    # List emotions
+    lemo = list(emotions.values)
+    lemo = list(lemo[0])
+    
+    maximo = max(lemo)
+    getEmo = lemo.index(maximo)
+    
+    return emotions, aus, getEmo
 
-def getInfoOpen(o1, o2, o3):
+def getInfoOpen(o1, o2, o3, emo):
     
     ret1 = []
     ret2 = []
@@ -81,7 +88,7 @@ def getInfoOpen(o1, o2, o3):
     laus = list(laus[0])                
     lblAus = list(o1)
         
-    getEmo = 3
+    getEmo = emo
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -108,7 +115,7 @@ def getInfoOpen(o1, o2, o3):
     laus = list(laus[0])                
     lblAus = list(o2)
         
-    getEmo = 3
+    getEmo = emo
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -135,7 +142,7 @@ def getInfoOpen(o1, o2, o3):
     laus = list(laus[0])                
     lblAus = list(o3)
         
-    getEmo = 3
+    getEmo = emo
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -158,18 +165,14 @@ def getInfoOpen(o1, o2, o3):
     
     return ret1, ret2
 
-def getInfos(p1):
+def getInfos(p1, emo):
    
     ret1 = []
     ret2 = []
 
-    emotions = p1[0]
-    
+    emotions = p1[0]    
     aus = p1[1]
-
-    # print(emotions, type(emotions))
-    # print(aus)                
-    
+         
     # List emotions
     lemo = list(emotions.values)
     lemo = list(lemo[0])
@@ -178,11 +181,16 @@ def getInfos(p1):
     laus = list(aus.values)
     laus = list(laus[0])                
     lblAus = list(aus)
+        
+    x = np.array(laus)
+    x = x.reshape(-1, 1)
+
+    #normalize all values to be between 0 and 1
+    x_norm = pre.MinMaxScaler(feature_range=(0, 5)).fit_transform(x)
 
     maximo = max(lemo)
-    getEmo = lemo.index(maximo)
-    
-    # print(ausEmo[getEmo])                
+    getEmo = emo
+                
     ret1.append(ausEmo[getEmo])
     
     temp = []                
@@ -197,41 +205,34 @@ def getInfos(p1):
         try :
             
             indice = lblAus.index(name)
-            getVal = laus[indice]
+            getVal = x_norm[indice][0]
             
             temp.append(getVal)
             
         except ValueError:
             pass;
         
-    # print(temp)
     ret2.append(temp)
-
-    ## =========================================================
     
     return ret1, ret2
 
 def runPlots(r1, r2, r3, retorno2):
-    
-    # print(r1)
-    # print(r2)
-    # print(r3)
-    # print(retorno2)
-    # exit()
-    
+        
     sns.set_theme()
     
     pimg = 'output/deep3d/'
     
     ## Deep3D Image
-    img = cv2.imread(pimg + f2)
+    img = cv2.imread(pimg + f2, cv2.COLOR_BGR2RGB)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     
     ## Crop Real Face    
     r = cropImage(f1, 'rec')
+    r = cv2.cvtColor(r, cv2.COLOR_BGR2RGB)
     
     ## Crop Real Face    
     retDeca = cropImage(f3, 'render')
+    retDeca = cv2.cvtColor(retDeca, cv2.COLOR_BGR2RGB)
     
     plt.figure(figsize=(16,9))
         
@@ -259,16 +260,15 @@ def runPlots(r1, r2, r3, retorno2):
 
     plt.subplot(3, 3, 4)
     plt.title('Intensities PyFeat')
-    plt.ylim([0,1])
+    plt.ylim([0,5])
     plt.bar(label1, valor1)
 
-    ## =========================================================    
     label2 = [str("AU") + str(x) for x in r2[0][0]]
     valor2 = r2[1][0]
     
     plt.subplot(3, 3, 5)
     plt.title('Intensities PyFeat')
-    plt.ylim([0,1])
+    plt.ylim([0,5])
     plt.bar(label2, valor2)
     
     label3 = [str("AU") + str(x) for x in r3[0][0]]
@@ -276,7 +276,7 @@ def runPlots(r1, r2, r3, retorno2):
     
     plt.subplot(3, 3, 6)
     plt.title('Intensities PyFeat')
-    plt.ylim([0,1])
+    plt.ylim([0,5])
     plt.bar(label3, valor3)
     
     ## =========================================================    
@@ -305,6 +305,13 @@ def runPlots(r1, r2, r3, retorno2):
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
     plt.bar(labelOpen3, valorOpen3)
+    
+    plt.subplots_adjust(left=0.1,
+                    bottom=0.1, 
+                    right=0.9, 
+                    top=0.9, 
+                    wspace=0.6, 
+                    hspace=0.6)
 
     # plt.show()
     plt.savefig('output/results/results_' + f1)
@@ -324,29 +331,29 @@ if __name__ == '__main__':
         [1, 2, 5, 26],
     ]
     
-    f1 = '099_08.jpg'
-    f2 = '099_08_mesh.png'
-    f3 = 'orig_099_08_rendered_images.jpg'
+    f1 = 'photo0.png'
+    f2 = 'photo0_mesh.png'
+    f3 = 'orig_photo0_rendered_images.jpg'
     
     ## Run Openface
-    openFace(f1, 'deep3d')
-    openFace(f2, 'deep3d')
-    openFace(f3, 'render')
+    # openFace(f1, 'deep3d')
+    # openFace(f2, 'deep3d')
+    # openFace(f3, 'render')
         
     ## Run Get data py-feat
     p1 = pyfeat(f1, 'rec') 
     p2 = pyfeat(f2, 'deep3d')
     p3 = pyfeat(f3, 'render')
         
-    r1 = getInfos(p1)
-    r2 = getInfos(p2)
-    r3 = getInfos(p3)
+    r1 = getInfos(p1, p1[2])
+    r2 = getInfos(p2, p1[2])
+    r3 = getInfos(p3, p1[2])
     
     ## Run Get data OpenFace
     o1 = dataOpen(f1.split('.')[0])
     o2 = dataOpen(f2.split('.')[0])
     o3 = dataOpen(f3.split('.')[0])
     
-    s = getInfoOpen(o1, o2, o3)
+    s = getInfoOpen(o1, o2, o3, p1[2])
     
     runPlots(r1, r2, r3, s)

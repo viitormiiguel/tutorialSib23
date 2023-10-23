@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\in\angry2.jpg
+Input full path:E:\PythonProjects\tutorialSib23\in\angry2.jpg
+Camera parameters:761.979,761.979,500,356.5
+Output HOG:angry2.hog
+Output image:angry2.jpg
+Output aligned directory:angry2_aligned
+Output csv:angry2.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

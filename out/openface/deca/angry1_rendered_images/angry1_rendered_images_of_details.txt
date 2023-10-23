@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\out\deca_pos\angry1_rendered_images.jpg
+Input full path:E:\PythonProjects\tutorialSib23\out\deca_pos\angry1_rendered_images.jpg
+Camera parameters:204.167,204.167,112,112
+Output HOG:angry1_rendered_images.hog
+Output image:angry1_rendered_images.jpg
+Output aligned directory:angry1_rendered_images_aligned
+Output csv:angry1_rendered_images.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

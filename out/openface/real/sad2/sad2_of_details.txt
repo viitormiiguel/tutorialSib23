@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\in\sad2.jpg
+Input full path:E:\PythonProjects\tutorialSib23\in\sad2.jpg
+Camera parameters:410.156,410.156,225,225
+Output HOG:sad2.hog
+Output image:sad2.jpg
+Output aligned directory:sad2_aligned
+Output csv:sad2.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\in\disgust1.jpg
+Input full path:E:\PythonProjects\tutorialSib23\in\disgust1.jpg
+Camera parameters:463.021,463.021,306,215
+Output HOG:disgust1.hog
+Output image:disgust1.jpg
+Output aligned directory:disgust1_aligned
+Output csv:disgust1.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

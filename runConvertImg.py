@@ -15,6 +15,8 @@ from simple_3dviz.behaviours.trajectory import Circle
 from simple_3dviz.utils import render
 from simple_3dviz.behaviours.io import SaveFrames
 
+import shutil
+
 import os
 
 detector = dlib.get_frontal_face_detector()
@@ -45,8 +47,29 @@ def convertImg():
                 ]
             )
             
+def copyImg():
+    
+    lista = os.listdir('out/deca')
+
+    for l in lista:
+        
+        if '.jpg' not in l:
+            
+            images = os.listdir('out/deca/' + l)
+            
+            for i in images:
+                
+                if i == str(l + '_rendered_images.jpg'):
+                    
+                    original = 'out/deca/' + l + '/' + i
+                    target = 'out/deca_pos/' + i
+                    
+                    shutil.copyfile(original, target)    
+            
 if __name__ == '__main__':
     
     path = 'in/'
         
-    convertImg()
+    # convertImg()
+    
+    copyImg()

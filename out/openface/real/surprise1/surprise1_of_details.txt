@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\in\surprise1.jpg
+Input full path:E:\PythonProjects\tutorialSib23\in\surprise1.jpg
+Camera parameters:738.021,738.021,500,333.5
+Output HOG:surprise1.hog
+Output image:surprise1.jpg
+Output aligned directory:surprise1_aligned
+Output csv:surprise1.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

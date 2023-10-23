@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\in\fear1.jpg
+Input full path:E:\PythonProjects\tutorialSib23\in\fear1.jpg
+Camera parameters:1511.46,1511.46,1024,683
+Output HOG:fear1.hog
+Output image:fear1.jpg
+Output aligned directory:fear1_aligned
+Output csv:fear1.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

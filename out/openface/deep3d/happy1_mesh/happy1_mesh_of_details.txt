@@ -1,0 +1,13 @@
+Input:E:\PythonProjects\tutorialSib23\out\deep3d_pos\happy1_mesh.png
+Input full path:E:\PythonProjects\tutorialSib23\out\deep3d_pos\happy1_mesh.png
+Camera parameters:233.333,233.333,128,128
+Output HOG:happy1_mesh.hog
+Output image:happy1_mesh.jpg
+Output aligned directory:happy1_mesh_aligned
+Output csv:happy1_mesh.csv
+Gaze: 1
+AUs: 1
+Landmarks 2D: 1
+Landmarks 3D: 1
+Pose: 1
+Shape parameters: 1

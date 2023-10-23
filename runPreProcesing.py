@@ -83,10 +83,43 @@ def convertImg():
                 ]
             )
 
+def convertImgDeca():
+    
+    lista = os.listdir('output/deca')
+    
+    for l in lista:
+        
+        if '.jpg' not in l:
+            
+            files = os.listdir('output/deca/' + l)
+            
+            for f in files:
+                
+                # if 'detail.obj' not in f and '.obj' in f: 
+                if 'detail.obj' in f: 
+                                        
+                    m = Mesh.from_file("output/deca/" + l + '/' + f, color=(0.8, 0.8, 0.8, 1.0))
+                    m.to_unit_cube()                    
+                    nome = f.split('.')
+                    
+                    render(
+                        [m],
+                        n_frames=200,
+                        size=(256,256),
+                        camera_position=(0.0, 0.15, 1.5),
+                        up_vector=(0, 1, 0),
+                        behaviours=[
+                            SaveFrames('output/render/' + nome[0] + '.png')
+                        ]
+                    )           
+    
+
 if __name__ == '__main__':
     
     path = 'output/rec/'
         
-    createTxt('output/rec/')
+    # createTxt('output/rec/')
     
-    convertImg()
+    # convertImg()
+    
+    convertImgDeca()

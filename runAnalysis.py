@@ -13,7 +13,7 @@ from feat.data import Fex
 from feat.utils.io import get_test_data_path
 from feat.plotting import imshow
 
-from runPlot import cropImage
+from runCropFace import cropImage
 import seaborn as sns
 
 
@@ -72,7 +72,7 @@ def pyfeat(image, tipo):
     
     return emotions, aus
 
-def getInfoOpen(o1, o2):
+def getInfoOpen(o1, o2, o3):
     
     ret1 = []
     ret2 = []
@@ -129,9 +129,36 @@ def getInfoOpen(o1, o2):
         
     ret2.append(temp)
     
+    ## ============================================
+    
+    laus = list(o3.values)
+    laus = list(laus[0])                
+    lblAus = list(o3)
+        
+    getEmo = 5
+    
+    # print(ausEmo[getEmo])                
+    ret1.append(ausEmo[getEmo])
+    
+    temp = []                
+    for i in ausEmo[getEmo]:
+        
+        name = ''
+        if len(str(i)) == 1:
+            name = ' AU0' + str(i) + '_r'
+        else:
+            name = ' AU' + str(i) + '_r'
+        
+        indice = lblAus.index(name)
+        getVal = laus[indice]
+        
+        temp.append(getVal)
+        
+    ret2.append(temp)
+    
     return ret1, ret2
 
-def getInfos(p1, p2):
+def getInfos(p1):
    
     ret1 = []
     ret2 = []
@@ -167,107 +194,96 @@ def getInfos(p1, p2):
         else:
             name = 'AU' + str(i)
         
-        indice = lblAus.index(name)
-        getVal = laus[indice]
-        
-        temp.append(getVal)
+        try :
+            
+            indice = lblAus.index(name)
+            getVal = laus[indice]
+            
+            temp.append(getVal)
+            
+        except ValueError:
+            pass;
         
     # print(temp)
     ret2.append(temp)
 
     ## =========================================================
-
-    emotions = p2[0]
-    
-    aus = p2[1]
-
-    # print(emotions)
-    # print(aus)
-    
-    # List emotions
-    lemo = list(emotions.values)
-    lemo = list(lemo[0])
-                    
-    # List aus
-    laus = list(aus.values)
-    laus = list(laus[0])                
-    lblAus = list(aus)
-
-    maximo = max(lemo)
-    getEmo = lemo.index(maximo)
-    
-    # print(ausEmo[getEmo])                
-    ret1.append(ausEmo[getEmo])
-    
-    temp = []                
-    for i in ausEmo[getEmo]:
-        
-        name = ''
-        if len(str(i)) == 1:
-            name = 'AU0' + str(i)
-        else:
-            name = 'AU' + str(i)
-        
-        indice = lblAus.index(name)
-        getVal = laus[indice]
-        
-        temp.append(getVal)
-        
-    # print(temp)
-    ret2.append(temp)
     
     return ret1, ret2
 
-def runPlots(retorno, retorno2):
+def runPlots(r1, r2, r3, retorno2):
+    
+    # print(r1)
+    # print(r2)
+    # print(r3)
+    # print(retorno2)
+    # exit()
     
     sns.set_theme()
     
     pimg = 'output/deep3d/'
     
     ## Deep3D Image
-    img = cv2.imread(pimg + "photo0_mesh.png")
+    img = cv2.imread(pimg + f2)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     
     ## Crop Real Face    
-    r = cropImage('photo0.png')
+    r = cropImage(f1, 'rec')
     
-    plt.figure(figsize=(10,8))
+    ## Crop Real Face    
+    retDeca = cropImage(f3, 'render')
+    
+    plt.figure(figsize=(12,9))
         
     ## =========================================================            
-    plt.subplot(3, 2, 1)
+    plt.subplot(3, 3, 1)
     plt.title('Real Face')
     plt.imshow(r)
     plt.axis('off')
 
     ## =========================================================
-    plt.subplot(3, 2, 2)
+    plt.subplot(3, 3, 2)
     plt.title('Deep3D Face')
     plt.imshow(img)
     plt.axis('off')
     
+    ## =========================================================
+    plt.subplot(3, 3, 3)
+    plt.title('DECA Face')
+    plt.imshow(retDeca)
+    plt.axis('off')
+       
     ## =========================================================    
-    label1 = [str("AU") + str(x) for x in retorno[0][0]]
-    valor1 = retorno[1][0]
+    label1 = [str("AU") + str(x) for x in r1[0][0]]
+    valor1 = r1[1][0]
 
-    plt.subplot(3, 2, 3)
+    plt.subplot(3, 3, 4)
     plt.title('Intensities PyFeat')
     plt.ylim([0,1])
     plt.bar(label1, valor1)
 
     ## =========================================================    
-    label2 = [str("AU") + str(x) for x in retorno[0][1]]
-    valor2 = retorno[1][1]
+    label2 = [str("AU") + str(x) for x in r2[0][0]]
+    valor2 = r2[1][0]
     
-    plt.subplot(3, 2, 4)
+    plt.subplot(3, 3, 5)
     plt.title('Intensities PyFeat')
     plt.ylim([0,1])
     plt.bar(label2, valor2)
+    
+    label3 = [str("AU") + str(x) for x in r3[0][0]]
+    valor3 = r3[1][0]
+    
+    plt.subplot(3, 3, 6)
+    plt.title('Intensities PyFeat')
+    plt.ylim([0,1])
+    plt.bar(label3, valor3)
     
     ## =========================================================    
     labelOpen1 = [str("AU") + str(x) for x in retorno2[0][0]]
     valorOpen1 = retorno2[1][0]
 
-    plt.subplot(3, 2, 5)
+    plt.subplot(3, 3, 7)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
     plt.bar(labelOpen1, valorOpen1)
@@ -276,12 +292,22 @@ def runPlots(retorno, retorno2):
     labelOpen2 = [str("AU") + str(x) for x in retorno2[0][1]]
     valorOpen2 = retorno2[1][1]
     
-    plt.subplot(3, 2, 6)
+    plt.subplot(3, 3, 8)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
     plt.bar(labelOpen2, valorOpen2)
+    
+    ## =========================================================    
+    labelOpen3 = [str("AU") + str(x) for x in retorno2[0][2]]
+    valorOpen3 = retorno2[1][2]
+    
+    plt.subplot(3, 3, 9)
+    plt.title('Intensities OpenFace')
+    plt.ylim([0,5])
+    plt.bar(labelOpen3, valorOpen3)
 
-    plt.show()
+    # plt.show()
+    plt.savefig('output/results/results_' + f1)
     
 if __name__ == '__main__': 
     
@@ -290,7 +316,7 @@ if __name__ == '__main__':
     labelEmo = ['anger','disgust', 'fear','happiness','sadness','surprise']
     
     ausEmo = [
-        [4, 5, 7, 10, 17, 22, 23, 24, 25, 26],
+        [4, 5, 7, 10, 17, 23, 24, 25, 26],
         [9, 10, 16, 17, 25, 26],
         [1, 2, 4, 5, 20, 25, 26],
         [6, 12],
@@ -300,21 +326,27 @@ if __name__ == '__main__':
     
     f1 = 'photo0.png'
     f2 = 'photo0_mesh.png'
+    f3 = 'orig_photo0_rendered_images.jpg'
     
     ## Run Openface
     # openFace(f1, 'deep3d')
     # openFace(f2, 'deep3d')
-    
+    # openFace(f3, 'render')
+        
     ## Run Get data py-feat
     p1 = pyfeat(f1, 'rec') 
-    p2 = pyfeat(f2, 'deep3d')    
+    p2 = pyfeat(f2, 'deep3d')
+    p3 = pyfeat(f3, 'render')
         
-    r = getInfos(p1, p2)
+    r1 = getInfos(p1)
+    r2 = getInfos(p2)
+    r3 = getInfos(p3)
     
     ## Run Get data OpenFace
     o1 = dataOpen(f1.split('.')[0])
     o2 = dataOpen(f2.split('.')[0])
+    o3 = dataOpen(f3.split('.')[0])
     
-    s = getInfoOpen(o1, o2)
+    s = getInfoOpen(o1, o2, o3)
     
-    runPlots(r, s)
+    runPlots(r1, r2, r3, s)

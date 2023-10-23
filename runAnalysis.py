@@ -81,7 +81,7 @@ def getInfoOpen(o1, o2, o3):
     laus = list(laus[0])                
     lblAus = list(o1)
         
-    getEmo = 5
+    getEmo = 3
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -108,7 +108,7 @@ def getInfoOpen(o1, o2, o3):
     laus = list(laus[0])                
     lblAus = list(o2)
         
-    getEmo = 5
+    getEmo = 3
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -135,7 +135,7 @@ def getInfoOpen(o1, o2, o3):
     laus = list(laus[0])                
     lblAus = list(o3)
         
-    getEmo = 5
+    getEmo = 3
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -233,7 +233,7 @@ def runPlots(r1, r2, r3, retorno2):
     ## Crop Real Face    
     retDeca = cropImage(f3, 'render')
     
-    plt.figure(figsize=(12,9))
+    plt.figure(figsize=(16,9))
         
     ## =========================================================            
     plt.subplot(3, 3, 1)
@@ -324,14 +324,14 @@ if __name__ == '__main__':
         [1, 2, 5, 26],
     ]
     
-    f1 = 'photo0.png'
-    f2 = 'photo0_mesh.png'
-    f3 = 'orig_photo0_rendered_images.jpg'
+    f1 = '099_08.jpg'
+    f2 = '099_08_mesh.png'
+    f3 = 'orig_099_08_rendered_images.jpg'
     
     ## Run Openface
-    # openFace(f1, 'deep3d')
-    # openFace(f2, 'deep3d')
-    # openFace(f3, 'render')
+    openFace(f1, 'deep3d')
+    openFace(f2, 'deep3d')
+    openFace(f3, 'render')
         
     ## Run Get data py-feat
     p1 = pyfeat(f1, 'rec') 

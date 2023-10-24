@@ -6,14 +6,14 @@ def cropImage(img_rec, tipo):
 
     face_cascade = cv2.CascadeClassifier('model/haarcascade_frontalface_default.xml') # pylint: disable=no-member
 
-    imagem  = cv2.imread('output/'+tipo+'/' + img_rec)    
+    imagem  = cv2.imread('out/'+tipo+'/' + img_rec)    
     gray    = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY) # pylint: disable=no-member
     faces   = face_cascade.detectMultiScale(gray, 1.1, 4, minSize=(100, 100))
     
     crop_img = ''
     for (x, y, w, h) in faces: 
                                 
-        img_face = 'output/'+tipo+'/' + img_rec
+        img_face = 'out/'+tipo+'/' + img_rec
                             
         crop_img = imagem[y:y+h, x:x+w]
         

@@ -1,0 +1,3 @@
+newmtl FaceTexture
+map_Kd frame_935.png
+disp E:/PythonProjects/tutorialSib23/test_deca\frame_935\frame_935_normals.png

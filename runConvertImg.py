@@ -25,13 +25,13 @@ predictor = dlib.shape_predictor('model/shape_predictor_68_face_landmarks.dat')
 
 def convertImg():
     
-    lista = os.listdir('out/deep3d')
+    lista = os.listdir('test_out')
 
     for l in lista:
         
         if '.obj' in l:
-            print("out/deep3d/" + l)
-            m = Mesh.from_file("out/deep3d/" + l, color=(0.8, 0.8, 0.8, 1.0))
+            print("test_out/" + l)
+            m = Mesh.from_file("test_out/" + l, color=(0.8, 0.8, 0.8, 1.0))
             m.to_unit_cube()
             
             nome = l.split('.')
@@ -43,7 +43,7 @@ def convertImg():
                 camera_position=(0.0, 0.15, 1.5),
                 up_vector=(0, 1, 0),
                 behaviours=[
-                    SaveFrames('out/deep3d_pos/' + nome[0] + '.png')
+                    SaveFrames('test_out/' + nome[0] + '.png')
                 ]
             )
             
@@ -70,6 +70,6 @@ if __name__ == '__main__':
     
     path = 'in/'
         
-    # convertImg()
+    convertImg()
     
-    copyImg()
+    # copyImg()

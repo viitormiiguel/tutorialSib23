@@ -33,24 +33,6 @@ def createTxt(imagesp):
         if '.png' in pimg or '.jpg' in pimg:
         
             img = cv2.imread(pimg)
-            print(img.shape)
-            
-            new = np.expand_dims(img, axis=0)     
-            print(new.shape)
-            
-            
-            # if len(img.shape) == 4:
-            #     img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
-            #     np.expand_dims(img, axis=0)
-            #     cv2.imwrite(imagesp + p, img)
-            #     print(img.shape) 
-            # else:
-                
-            #     img = np.expand_dims(img, axis=0)
-            #     print(img.shape)
-            #     cv2.imwrite(imagesp + p, img) 
-                
-            #     print(img.shape) 
             
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             rects = detector(gray, 0)
@@ -84,4 +66,4 @@ if __name__ == '__main__':
     
     path = 'in/'
         
-    createTxt('in/')
+    createTxt('test/')

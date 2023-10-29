@@ -75,7 +75,7 @@ def getInfoOpen(o1, o2, o3, emo):
     laus = list(laus[0])                
     lblAus = list(o1)
         
-    getEmo = emo
+    getEmo = 2
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -107,7 +107,7 @@ def getInfoOpen(o1, o2, o3, emo):
     laus = list(laus[0])                
     lblAus = list(o2)
         
-    getEmo = emo
+    getEmo = 2
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -139,7 +139,7 @@ def getInfoOpen(o1, o2, o3, emo):
     laus = list(laus[0])                
     lblAus = list(o3)
         
-    getEmo = emo
+    getEmo = 2
     
     # print(ausEmo[getEmo])                
     ret1.append(ausEmo[getEmo])
@@ -191,7 +191,7 @@ def getInfos(p1, emo):
     x_norm = pre.MinMaxScaler(feature_range=(0, 5)).fit_transform(x)
 
     maximo = max(lemo)
-    getEmo = emo
+    getEmo = 2
                 
     ret1.append(ausEmo[getEmo])
     
@@ -234,59 +234,60 @@ def runPlots(r1, r2, r3, retorno2):
     r = cv2.cvtColor(r, cv2.COLOR_BGR2RGB)
     
     ## Crop Real Face    
-    retDeca = cropImage(f3, 'deca_pos')
+    # retDeca = cropImage(f3, 'deca_pos')
+    retDeca = cv2.imread('out/deca_pos/' + f3, cv2.COLOR_BGR2RGB)
     retDeca = cv2.cvtColor(retDeca, cv2.COLOR_BGR2RGB)
     
-    plt.figure(figsize=(16,9))
+    plt.figure(figsize=(18,8))
         
     ## =========================================================            
-    plt.subplot(3, 3, 1)
+    plt.subplot(2, 3, 1)
     plt.title('Real Face')
     plt.imshow(r)
     plt.axis('off')
 
     ## =========================================================
-    plt.subplot(3, 3, 2)
+    plt.subplot(2, 3, 2)
     plt.title('Deep3D Face')
     plt.imshow(img)
     plt.axis('off')
     
     ## =========================================================
-    plt.subplot(3, 3, 3)
+    plt.subplot(2, 3, 3)
     plt.title('DECA Face')
     plt.imshow(retDeca)
     plt.axis('off')
        
     ## =========================================================    
-    label1 = [str("AU") + str(x) for x in r1[0][0]]
-    valor1 = r1[1][0]
+    # label1 = [str("AU") + str(x) for x in r1[0][0]]
+    # valor1 = r1[1][0]
 
-    plt.subplot(3, 3, 4)
-    plt.title('Intensities PyFeat')
-    plt.ylim([0,5])
-    plt.bar(label1, valor1)
+    # plt.subplot(3, 3, 4)
+    # plt.title('Intensities PyFeat')
+    # plt.ylim([0,5])
+    # plt.bar(label1, valor1)
 
-    label2 = [str("AU") + str(x) for x in r2[0][0]]
-    valor2 = r2[1][0]
+    # label2 = [str("AU") + str(x) for x in r2[0][0]]
+    # valor2 = r2[1][0]
     
-    plt.subplot(3, 3, 5)
-    plt.title('Intensities PyFeat')
-    plt.ylim([0,5])
-    plt.bar(label2, valor2)
+    # plt.subplot(3, 3, 5)
+    # plt.title('Intensities PyFeat')
+    # plt.ylim([0,5])
+    # plt.bar(label2, valor2)
     
-    label3 = [str("AU") + str(x) for x in r3[0][0]]
-    valor3 = r3[1][0]
+    # label3 = [str("AU") + str(x) for x in r3[0][0]]
+    # valor3 = r3[1][0]
     
-    plt.subplot(3, 3, 6)
-    plt.title('Intensities PyFeat')
-    plt.ylim([0,5])
-    plt.bar(label3, valor3)
+    # plt.subplot(3, 3, 6)
+    # plt.title('Intensities PyFeat')
+    # plt.ylim([0,5])
+    # plt.bar(label3, valor3)
     
     ## =========================================================    
     labelOpen1 = [str("AU") + str(x) for x in retorno2[0][0]]
     valorOpen1 = retorno2[1][0]
 
-    plt.subplot(3, 3, 7)
+    plt.subplot(2, 3, 4)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
     plt.bar(labelOpen1, valorOpen1)
@@ -295,7 +296,7 @@ def runPlots(r1, r2, r3, retorno2):
     labelOpen2 = [str("AU") + str(x) for x in retorno2[0][1]]
     valorOpen2 = retorno2[1][1]
     
-    plt.subplot(3, 3, 8)
+    plt.subplot(2, 3, 5)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
     plt.bar(labelOpen2, valorOpen2)
@@ -304,7 +305,7 @@ def runPlots(r1, r2, r3, retorno2):
     labelOpen3 = [str("AU") + str(x) for x in retorno2[0][2]]
     valorOpen3 = retorno2[1][2]
     
-    plt.subplot(3, 3, 9)
+    plt.subplot(2, 3, 6)
     plt.title('Intensities OpenFace')
     plt.ylim([0,5])
     plt.bar(labelOpen3, valorOpen3)
@@ -340,7 +341,7 @@ if __name__ == '__main__':
     
     for i, j in enumerate(realFiles):
         
-        if 'surprise2.jpg' in j:
+        if 'fear1.jpg' in j:
     
             f1 = j
             f2 = deep3dFiles[i]
